@@ -111,8 +111,8 @@ def checkForWinner(b, player):
             if b[i][j] == player and b[i+1][j+1] == player and b[i+2][j+2] == player and b[i+3][j+3] == player:
                 return True
     for i in range(3, rows):
-        for j in range(3, cols):
-            if b[i][j] == player and b[i-1][j-1] == player and b[i-2][j-2] == player and b[i-3][j-3] == player:
+        for j in range(0, cols-3):
+            if b[i][j] == player and b[i-1][j+1] == player and b[i-2][j+2] == player and b[i-3][j+3] == player:
                 return True
 
 def getRandomMove():
@@ -128,13 +128,13 @@ def getMinimaxMove(b):
         if validMove(i):
             boardCopy = [x[:] for x in b]
             playMove(boardCopy, i, CPU)
-            eval = minimax(3, boardCopy, False)
+            eval = minimax(4, boardCopy, -999, 999, False)
             if eval > preval:
                 preval = eval
                 move = i
     return move
 
-def minimax(depth, b, isMaximising):
+def minimax(depth, b, alpha, beta, isMaximising):
     if checkForWinner(b, CPU):
         return 999
     elif checkForWinner(b, P1):
@@ -150,8 +150,11 @@ def minimax(depth, b, isMaximising):
             if validMove(i):
                 boardCopy = [x[:] for x in b]
                 playMove(boardCopy, i, CPU)
-                eval = minimax(depth - 1, boardCopy, False)
+                eval = minimax(depth - 1, boardCopy, alpha, beta, False)
                 maxEval = max(maxEval, eval)
+                alpha = max(alpha, eval)
+                if beta <= alpha:
+                    break
         return maxEval
 
 
@@ -162,8 +165,11 @@ def minimax(depth, b, isMaximising):
             if validMove(i):
                 boardCopy = [x[:] for x in b]
                 playMove(boardCopy, i, P1)
-                eval = minimax(depth - 1, boardCopy, True)
+                eval = minimax(depth - 1, boardCopy, alpha, beta, True)
                 minEval = min(minEval, eval)
+                beta = min(beta, eval)
+                if beta <= alpha:
+                    break
         return minEval
 
 
