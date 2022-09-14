@@ -76,27 +76,6 @@ def playMove(b, move, player):
                 return True
     return False
 
-# def checkForWinner(b, row, col, player):
-#     for i in range(row - 1, row + 2):
-#         for j in range(col - 1, col + 2):
-#             if (not (i == row and j == col) and (i in range(0, 6)) and (j in range(0, 7))):
-#                 if (b[i][j] == player):
-#                     if (checkAlongLine(b, row, col, i, j, player)):
-#                         return True
-#     return False
-#
-# def checkAlongLine(b, r1, c1, r2, c2, player):
-#     rowIt = r2 - r1
-#     colIt = c2 - c1
-#
-#     if (not (r2 + rowIt in range(0,6)) or not(c2 + colIt in range(0,7))):
-#         return
-#     if (not (r2 + 2 * rowIt in range(0,6)) or not(c2 + 2 * colIt in range(0,7))):
-#         return
-#
-#     if (b[r2 + rowIt][c2 + colIt] == player) and (b[r2+ 2*rowIt][c2 + 2*colIt] == player):
-#         return True
-
 def checkForWinner(b, player):
     for i in range(0, rows):
         for j in range(0, cols-3):
